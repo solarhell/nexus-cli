@@ -1,5 +1,9 @@
 # Nexus CLI
 
+<p align="center">
+  <img src="assets/logo.jpg" alt="Nexus CLI Logo" width="200">
+</p>
+
 > *Smart Routing, Perfect Match.*
 
 [中文文档](README_CN.md)

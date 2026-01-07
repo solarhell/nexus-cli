@@ -1,5 +1,9 @@
 # Nexus CLI
 
+<p align="center">
+  <img src="assets/logo.jpg" alt="Nexus CLI Logo" width="200">
+</p>
+
 > *智能路由，精准匹配。*
 
 [English](README.md)
