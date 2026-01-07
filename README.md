@@ -1,5 +1,7 @@
 # Nexus CLI
 
+> *Smart Routing, Perfect Match.*
+
 [中文文档](README_CN.md)
 
 **Intelligent Task Router for Claude Code** - Automatically route development tasks to the most suitable AI executor (Claude, Gemini, or Codex) based on task characteristics.

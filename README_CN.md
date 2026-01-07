@@ -1,5 +1,7 @@
 # Nexus CLI
 
+> *智能路由，精准匹配。*
+
 [English](README.md)
 
 **Claude Code 智能任务路由器** - 根据任务特性自动将开发任务路由到最合适的 AI 执行器（Claude、Gemini 或 Codex）。
