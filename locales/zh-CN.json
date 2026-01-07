@@ -1,0 +1,106 @@
+{
+  "_meta": {
+    "language": "zh-CN",
+    "name": "简体中文",
+    "version": "1.0.0"
+  },
+  "common": {
+    "yes": "是",
+    "no": "否",
+    "ok": "确定",
+    "cancel": "取消",
+    "error": "错误",
+    "warning": "警告",
+    "success": "成功",
+    "loading": "加载中...",
+    "please_wait": "请稍候..."
+  },
+  "cli": {
+    "welcome": "欢迎使用 Nexus CLI",
+    "version": "版本 {version}",
+    "help": "使用 /nexus --help 查看使用说明",
+    "goodbye": "再见！"
+  },
+  "executor": {
+    "selecting": "正在选择执行器...",
+    "selected": "已选择执行器: {executor}",
+    "claude": "Claude (架构与分析)",
+    "gemini": "Gemini (前端与UI)",
+    "codex": "Codex (后端与API)",
+    "confirm_prompt": "使用 {executor} 执行此任务？",
+    "routing_by_pattern": "根据文件模式路由: {pattern}",
+    "routing_by_keyword": "根据关键词路由: {keyword}",
+    "routing_default": "使用默认执行器"
+  },
+  "task": {
+    "starting": "开始任务: {name}",
+    "completed": "任务完成: {name}",
+    "failed": "任务失败: {name}",
+    "skipped": "任务跳过: {name}",
+    "retry": "重试任务 ({attempt}/{max}): {name}",
+    "timeout": "任务超时 ({seconds} 秒)",
+    "cancelled": "任务已被用户取消"
+  },
+  "batch": {
+    "starting": "开始批次 {id}: {name}",
+    "completed": "批次完成: {success}/{total} 成功",
+    "serial": "顺序执行任务",
+    "parallel": "并行执行 {count} 个任务"
+  },
+  "progress": {
+    "overall": "总体进度",
+    "batch": "批次进度",
+    "task": "任务进度",
+    "completed": "已完成",
+    "failed": "失败",
+    "pending": "待处理",
+    "running": "执行中",
+    "estimated_remaining": "预计剩余: {time}"
+  },
+  "checkpoint": {
+    "saving": "保存检查点...",
+    "saved": "检查点已保存",
+    "loading": "加载检查点...",
+    "loaded": "检查点已加载",
+    "resume_prompt": "是否从检查点恢复？",
+    "resume_from": "从批次 {batch} 恢复: {name}",
+    "no_checkpoint": "未找到检查点"
+  },
+  "config": {
+    "loading": "加载配置...",
+    "loaded": "已从 {path} 加载配置",
+    "not_found": "未找到配置文件，使用默认配置",
+    "invalid": "配置无效: {error}"
+  },
+  "error": {
+    "generic": "发生错误: {message}",
+    "network": "网络错误: {message}",
+    "timeout": "操作超时",
+    "permission": "权限被拒绝: {path}",
+    "not_found": "未找到: {item}",
+    "invalid_input": "输入无效: {message}",
+    "executor_failed": "执行器失败: {executor}",
+    "recovery_prompt": "您想如何处理？",
+    "recovery_retry": "重试失败的任务",
+    "recovery_skip": "跳过并继续",
+    "recovery_abort": "中止执行"
+  },
+  "spec": {
+    "generating": "生成规格说明...",
+    "requirements": "需求文档",
+    "design": "设计文档",
+    "tasks": "任务分解",
+    "validation": "验证规格说明...",
+    "valid": "规格说明有效",
+    "invalid": "规格说明验证失败"
+  },
+  "install": {
+    "checking": "检查安装状态...",
+    "installing": "安装 Nexus CLI...",
+    "installed": "Nexus CLI 安装成功",
+    "updating": "更新 Nexus CLI...",
+    "updated": "Nexus CLI 已更新到版本 {version}",
+    "uninstalling": "卸载 Nexus CLI...",
+    "uninstalled": "Nexus CLI 已卸载"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "_meta": {
+    "language": "en-US",
+    "name": "English (US)",
+    "version": "1.0.0"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "error": "Error",
+    "warning": "Warning",
+    "success": "Success",
+    "loading": "Loading...",
+    "please_wait": "Please wait..."
+  },
+  "cli": {
+    "welcome": "Welcome to Nexus CLI",
+    "version": "Version {version}",
+    "help": "Use /nexus --help for usage information",
+    "goodbye": "Goodbye!"
+  },
+  "executor": {
+    "selecting": "Selecting executor for task...",
+    "selected": "Selected executor: {executor}",
+    "claude": "Claude (Architecture & Analysis)",
+    "gemini": "Gemini (Frontend & UI)",
+    "codex": "Codex (Backend & API)",
+    "confirm_prompt": "Use {executor} for this task?",
+    "routing_by_pattern": "Routing by file pattern: {pattern}",
+    "routing_by_keyword": "Routing by keyword: {keyword}",
+    "routing_default": "Using default executor"
+  },
+  "task": {
+    "starting": "Starting task: {name}",
+    "completed": "Task completed: {name}",
+    "failed": "Task failed: {name}",
+    "skipped": "Task skipped: {name}",
+    "retry": "Retrying task ({attempt}/{max}): {name}",
+    "timeout": "Task timed out after {seconds} seconds",
+    "cancelled": "Task cancelled by user"
+  },
+  "batch": {
+    "starting": "Starting batch {id}: {name}",
+    "completed": "Batch completed: {success}/{total} succeeded",
+    "serial": "Executing tasks sequentially",
+    "parallel": "Executing {count} tasks in parallel"
+  },
+  "progress": {
+    "overall": "Overall Progress",
+    "batch": "Batch Progress",
+    "task": "Task Progress",
+    "completed": "Completed",
+    "failed": "Failed",
+    "pending": "Pending",
+    "running": "Running",
+    "estimated_remaining": "Estimated remaining: {time}"
+  },
+  "checkpoint": {
+    "saving": "Saving checkpoint...",
+    "saved": "Checkpoint saved",
+    "loading": "Loading checkpoint...",
+    "loaded": "Checkpoint loaded",
+    "resume_prompt": "Resume from checkpoint?",
+    "resume_from": "Resuming from batch {batch}: {name}",
+    "no_checkpoint": "No checkpoint found"
+  },
+  "config": {
+    "loading": "Loading configuration...",
+    "loaded": "Configuration loaded from {path}",
+    "not_found": "Configuration file not found, using defaults",
+    "invalid": "Invalid configuration: {error}"
+  },
+  "error": {
+    "generic": "An error occurred: {message}",
+    "network": "Network error: {message}",
+    "timeout": "Operation timed out",
+    "permission": "Permission denied: {path}",
+    "not_found": "Not found: {item}",
+    "invalid_input": "Invalid input: {message}",
+    "executor_failed": "Executor failed: {executor}",
+    "recovery_prompt": "How would you like to proceed?",
+    "recovery_retry": "Retry the failed task",
+    "recovery_skip": "Skip and continue",
+    "recovery_abort": "Abort execution"
+  },
+  "spec": {
+    "generating": "Generating specification...",
+    "requirements": "Requirements Document",
+    "design": "Design Document",
+    "tasks": "Task Breakdown",
+    "validation": "Validating specification...",
+    "valid": "Specification is valid",
+    "invalid": "Specification validation failed"
+  },
+  "install": {
+    "checking": "Checking installation...",
+    "installing": "Installing Nexus CLI...",
+    "installed": "Nexus CLI installed successfully",
+    "updating": "Updating Nexus CLI...",
+    "updated": "Nexus CLI updated to version {version}",
+    "uninstalling": "Uninstalling Nexus CLI...",
+    "uninstalled": "Nexus CLI uninstalled"
+  }
+}

@@ -1,0 +1,24 @@
+
+# Multi-CLI temporary files
+.multi-agent-temp/
+.nexus-temp/
+.test-nexus/
+*.log
+
+# Progress tracking files (stored in .nexus-temp/)
+.nexus-progress.lock
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

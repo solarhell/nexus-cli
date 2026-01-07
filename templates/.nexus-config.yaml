@@ -1,0 +1,288 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Nexus CLI Configuration File
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# This file configures Nexus CLI behavior for your project.
+# Place this file in your project root as `.nexus-config.yaml`
+#
+# Configuration sources (priority order):
+# 1. Environment variables (NEXUS_*)
+# 2. Project config (.nexus-config.yaml) <- This file
+# 3. User config (~/.nexus/config.yaml)
+# 4. Default config
+#
+# ═══════════════════════════════════════════════════════════════════════════════
+
+version: "1.0.0"
+
+# Language setting: auto, zh-CN, en-US
+language: auto
+
+# Spec and checkpoint directories (relative to project root)
+spec_dir: ".nexus-temp/specs"
+checkpoint_dir: ".nexus-temp/checkpoints"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Executor Routing Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+routing:
+  # Default executor when no rules match
+  default_executor: claude
+
+  # Custom routing rules (higher priority = checked first)
+  # Pattern supports glob syntax: *, **, ?
+  rules:
+    # Frontend - Gemini excels at UI components
+    - pattern: "**/components/**"
+      executor: gemini
+      priority: 10
+      description: "React/Vue components"
+
+    - pattern: "*.tsx"
+      executor: gemini
+      priority: 5
+      description: "TypeScript React files"
+
+    - pattern: "*.vue"
+      executor: gemini
+      priority: 5
+      description: "Vue single-file components"
+
+    - pattern: "**/ui/**"
+      executor: gemini
+      priority: 8
+      description: "UI related files"
+
+    - pattern: "**/styles/**"
+      executor: gemini
+      priority: 8
+      description: "Styling files (CSS/SCSS)"
+
+    # Backend - Codex excels at APIs and databases
+    - pattern: "**/api/**"
+      executor: codex
+      priority: 10
+      description: "API endpoints"
+
+    - pattern: "**/models/**"
+      executor: codex
+      priority: 8
+      description: "Data models"
+
+    - pattern: "**/services/**"
+      executor: codex
+      priority: 8
+      description: "Service layer"
+
+    - pattern: "**/db/**"
+      executor: codex
+      priority: 10
+      description: "Database related"
+
+    - pattern: "*.sql"
+      executor: codex
+      priority: 10
+      description: "SQL files"
+
+    - pattern: "**/migrations/**"
+      executor: codex
+      priority: 10
+      description: "Database migrations"
+
+    # Architecture/Analysis - Claude excels at complex reasoning
+    - pattern: "**/architecture/**"
+      executor: claude
+      priority: 15
+      description: "Architecture documents"
+
+    - pattern: "**/design/**"
+      executor: claude
+      priority: 12
+      description: "Design documents"
+
+    # Add your custom rules here:
+    # - pattern: "**/your-pattern/**"
+    #   executor: gemini  # or codex, claude
+    #   priority: 20
+    #   description: "Your description"
+
+  # Executor-specific configuration
+  executors:
+    claude:
+      enabled: true
+      timeout_minutes: 15
+      max_retries: 2
+
+    gemini:
+      enabled: true
+      timeout_minutes: 10
+      max_retries: 3
+      role: default  # PAL clink role
+
+    codex:
+      enabled: true
+      timeout_minutes: 10
+      max_retries: 3
+      role: default  # PAL clink role
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Execution Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+execution:
+  # Maximum number of parallel tasks within a batch
+  max_parallel_tasks: 5
+
+  # Timeout for individual tasks (minutes)
+  task_timeout_minutes: 10
+
+  # Timeout for entire batch (minutes)
+  batch_timeout_minutes: 30
+
+  # Error handling strategy:
+  #   - retry: Automatically retry failed tasks
+  #   - skip: Skip failed tasks and continue
+  #   - fail_fast: Stop immediately on first failure
+  #   - ask: Ask user how to handle (default)
+  error_strategy: ask
+
+  # Maximum retry attempts for failed tasks
+  max_retries: 3
+
+  # Delay between retries (seconds)
+  retry_delay_seconds: 5
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Logging Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+logging:
+  # Enable execution logging
+  enabled: true
+
+  # Log level: debug, info, warn, error
+  level: info
+
+  # Save logs to file
+  log_to_file: true
+
+  # Log directory (relative to project root)
+  log_dir: ".nexus-temp/logs"
+
+  # Maximum number of log files to keep
+  max_log_files: 10
+
+  # Maximum size of each log file (MB)
+  max_log_size_mb: 10
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Progress Display Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+progress:
+  # Show individual task progress
+  show_task_progress: true
+
+  # Show batch-level progress
+  show_batch_progress: true
+
+  # Show time estimates
+  show_time_estimates: true
+
+  # Show executor statistics
+  show_executor_stats: true
+
+  # Progress update interval (seconds)
+  update_interval_seconds: 1.0
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Feature Flags
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Skip code review after task completion
+skip_code_review: false
+
+# Skip documentation generation after task completion
+skip_documentation: false
+
+# Automatically save checkpoints (for resume capability)
+auto_checkpoint: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Quality Gates Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+quality_gates:
+  # Enable quality gates (set to false to skip all quality checks)
+  enabled: true
+
+  # Gate policy: when to run quality gates
+  #   - per_batch: Run after each batch completes
+  #   - on_complete: Run once after all batches complete (default)
+  #   - manual: Only run when explicitly requested
+  policy: on_complete
+
+  # Ask user before running each gate (recommended for interactive mode)
+  ask_before_run: true
+
+  # Gate configurations (enabled, required, custom commands)
+  gates:
+    # Build verification - ensure project compiles/builds
+    build:
+      enabled: true
+      required: true  # If true, failure blocks further execution
+      # Custom command (auto-detected if empty):
+      # command: "npm run build"
+
+    # Lint check - code style and quality
+    lint:
+      enabled: true
+      required: false  # Warnings don't block execution
+      # Custom command (auto-detected if empty):
+      # command: "npm run lint"
+
+    # Type checking - static type verification
+    typecheck:
+      enabled: true
+      required: true
+      # Custom command (auto-detected if empty):
+      # command: "npm run typecheck"
+
+    # Test execution - run test suite
+    test:
+      enabled: false  # Disabled by default (can be slow)
+      required: false
+      # Custom command (auto-detected if empty):
+      # command: "npm test"
+
+    # Code review - AI-assisted code review via PAL
+    review:
+      enabled: true
+      required: false  # Review suggestions don't block execution
+      # Review focus areas (optional)
+      focus:
+        - security
+        - performance
+        - quality
+      # Thinking mode for review (minimal, low, medium, high, max)
+      thinking_mode: medium
+
+  # Timeout for each gate (seconds)
+  gate_timeout_seconds: 300
+
+  # Continue execution even if non-required gates fail
+  continue_on_optional_failure: true
+
+  # Save gate results to log
+  log_gate_results: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Environment Variable Overrides
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# You can override any setting with environment variables:
+#
+# NEXUS_MAX_PARALLEL_TASKS=10
+# NEXUS_TASK_TIMEOUT=15
+# NEXUS_ERROR_STRATEGY=retry
+# NEXUS_LOG_LEVEL=debug
+# NEXUS_LANGUAGE=en-US
+# NEXUS_DEFAULT_EXECUTOR=codex
+#
+# ═══════════════════════════════════════════════════════════════════════════════
