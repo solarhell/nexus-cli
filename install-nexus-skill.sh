@@ -176,19 +176,21 @@ install_pal_mcp() {
 
     # Check if ~/.claude.json exists
     if [ ! -f "$HOME/.claude.json" ]; then
+        info "Creating ~/.claude.json"
         echo '{"mcpServers":{}}' > "$HOME/.claude.json"
-        info "Created ~/.claude.json"
+        ok "Created ~/.claude.json"
     fi
 
     # Add PAL MCP configuration
     if command_exists jq; then
         # Use jq if available for proper JSON manipulation
+        info "Configuring PAL MCP Server in ~/.claude.json"
         local temp_file=$(mktemp)
         jq '.mcpServers.pal = {
             "command": "uvx",
             "args": ["--from", "git+https://github.com/BeehiveInnovations/pal-mcp-server.git", "pal-mcp-server"]
         }' "$HOME/.claude.json" > "$temp_file" && mv "$temp_file" "$HOME/.claude.json"
-        ok "PAL MCP configured in ~/.claude.json"
+        ok "PAL MCP configured successfully in ~/.claude.json"
     else
         # Manual approach if jq not available
         warn "jq not found. Please manually add PAL MCP to ~/.claude.json:"
@@ -212,22 +214,24 @@ install_gemini() {
         return 1
     fi
 
-    npm install -g @anthropic/gemini-cli 2>/dev/null || npm install -g gemini-cli 2>/dev/null
+    info "Running: npm install -g @google/gemini-cli"
+    npm install -g @google/gemini-cli 2>/dev/null
     if check_gemini; then
-        ok "Gemini CLI installed"
+        ok "Gemini CLI installed successfully via npm"
         return 0
     else
         # Try alternative installation
         info "Trying alternative installation method..."
         if check_uv; then
+            info "Running: uv tool install gemini-cli"
             uv tool install gemini-cli 2>/dev/null
             if check_gemini; then
-                ok "Gemini CLI installed via uv"
+                ok "Gemini CLI installed successfully via uv"
                 return 0
             fi
         fi
         warn "Could not install Gemini CLI automatically"
-        echo -e "  ${DIM}Manual installation: npm install -g @google/generative-ai-cli${NC}"
+        echo -e "  ${DIM}Manual installation: npm install -g @google/gemini-cli${NC}"
         return 1
     fi
 }
@@ -237,17 +241,19 @@ install_codex() {
     echo -e "\n${BOLD}Installing Codex CLI...${NC}"
 
     if check_uv; then
+        info "Running: uv tool install codex-cli"
         uv tool install codex-cli 2>/dev/null
         if check_codex; then
-            ok "Codex CLI installed via uv"
+            ok "Codex CLI installed successfully via uv"
             return 0
         fi
     fi
 
     if check_npm; then
+        info "Running: npm install -g @openai/codex-cli"
         npm install -g @openai/codex-cli 2>/dev/null || npm install -g codex 2>/dev/null
         if check_codex; then
-            ok "Codex CLI installed via npm"
+            ok "Codex CLI installed successfully via npm"
             return 0
         fi
     fi
@@ -261,23 +267,31 @@ install_codex() {
 install_uv() {
     echo -e "\n${BOLD}Installing uv (Python package manager)...${NC}"
 
+    local install_method=""
+
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
         if command_exists brew; then
+            info "Running: brew install uv"
             brew install uv
+            install_method="brew"
         else
+            info "Running: curl -LsSf https://astral.sh/uv/install.sh | sh"
             curl -LsSf https://astral.sh/uv/install.sh | sh
+            install_method="install script"
         fi
     else
         # Linux
+        info "Running: curl -LsSf https://astral.sh/uv/install.sh | sh"
         curl -LsSf https://astral.sh/uv/install.sh | sh
+        install_method="install script"
     fi
 
     # Source the updated PATH
     export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 
     if check_uv; then
-        ok "uv installed"
+        ok "uv installed successfully via $install_method"
         return 0
     else
         warn "Could not install uv automatically"
@@ -290,20 +304,32 @@ install_uv() {
 install_jq() {
     echo -e "\n${BOLD}Installing jq (JSON processor)...${NC}"
 
+    local install_method=""
+
     if [[ "$OSTYPE" == "darwin"* ]]; then
         if command_exists brew; then
+            info "Running: brew install jq"
             brew install jq
+            install_method="brew"
         fi
     else
         if command_exists apt-get; then
+            info "Running: sudo apt-get install -y jq"
             sudo apt-get install -y jq
+            install_method="apt-get"
         elif command_exists yum; then
+            info "Running: sudo yum install -y jq"
             sudo yum install -y jq
+            install_method="yum"
         fi
     fi
 
     if command_exists jq; then
-        ok "jq installed"
+        if [ -n "$install_method" ]; then
+            ok "jq installed successfully via $install_method"
+        else
+            ok "jq is already installed"
+        fi
         return 0
     else
         warn "Could not install jq automatically"
